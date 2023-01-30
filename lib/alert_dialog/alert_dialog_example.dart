@@ -38,6 +38,7 @@ class _HomeState extends State<Home> {
   @override
   void dispose() {
     controller.dispose();
+    
     super.dispose();
   }
 
@@ -48,7 +49,7 @@ class _HomeState extends State<Home> {
         title: Text(MyApp.title.toString())
       ),
       body: Container(
-        padding: EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         child: Column(
           children: [
             Row(
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    child: Text('Open Dialog'),
+                    child: const Text('Open Dialog'),
                     onPressed: () async {
                       final name = await openDialog();
 
@@ -98,6 +99,8 @@ class _HomeState extends State<Home> {
         autofocus: true,
         decoration: InputDecoration(hintText: "Enter your Name"),
         controller: controller,
+        // Hide the Submit button if press Check button in Keyboard
+        onSubmitted: (_) => submit(),
       ),
       actions: [
         TextButton(
@@ -110,7 +113,7 @@ class _HomeState extends State<Home> {
 
   void submit() {
     Navigator.of(context).pop(controller.text);
-    
+
     controller.clear();
   }
 }
