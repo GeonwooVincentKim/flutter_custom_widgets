@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/app_screens/my_floating_action_button.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/habit_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
     // [ habitName, habitCompleted ]
     ["Morning Run", false],
     ["Read Book", false],
+    ["Code App", false],
   ];
 
   // checkbox was tapped
@@ -23,10 +25,19 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // create a new habit
+  void createNewHabit() {
+    // show alert dialog for user to enter the new habit details
+    showDialog(context: context, builder: (context) {
+      return AlertDialog();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
       body: ListView.builder(
         itemCount: todaysHabitList.length,
         itemBuilder:(context, index) {
