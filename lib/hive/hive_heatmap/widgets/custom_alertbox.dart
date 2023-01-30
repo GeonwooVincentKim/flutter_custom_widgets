@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 
 class CustomAlertBox extends StatelessWidget {
   final controller;
+  final String hintText;
   final VoidCallback onSave;
   final VoidCallback onCancel;
 
-  const CustomAlertBox({super.key, this.controller, required this.onSave, required this.onCancel});
+  const CustomAlertBox({
+    super.key, 
+    required this.controller, 
+    required this.hintText, 
+    required this.onSave, 
+    required this.onCancel
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +21,11 @@ class CustomAlertBox extends StatelessWidget {
       content: TextField(
         controller: controller,
         style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-        decoration: const InputDecoration(
-          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white))
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey[600]),
+          enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white))
         ),
         onSubmitted: (_) => submit(context),
       ),
