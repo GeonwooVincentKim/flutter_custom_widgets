@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/app_screens/my_floating_action_button.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/enter_new_habit_box.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/habit_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,11 +27,43 @@ class _HomePageState extends State<HomePage> {
   }
 
   // create a new habit
+  final _newHabitNameController = TextEditingController();
+
   void createNewHabit() {
     // show alert dialog for user to enter the new habit details
-    showDialog(context: context, builder: (context) {
-      return AlertDialog();
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return EnterNewHabitBox(
+          controller: _newHabitNameController,
+          onSave: saveNewHabit,
+          onCancel: cancelNewHabit,
+        );
+      }
+    );
+  }
+
+  // save the new habit
+  void saveNewHabit() {
+    // add new habit to todays habit list
+    setState(() {
+      todaysHabitList.add([_newHabitNameController.text, false]);
     });
+
+    // clear textfield
+    _newHabitNameController.clear();
+
+    // pop dialog box
+    Navigator.of(context).pop();
+  }
+
+  // cancle the new habit
+  void cancelNewHabit() {
+    // clear textfield
+    _newHabitNameController.clear();
+
+    // pop dialog box
+    Navigator.of(context).pop();
   }
 
   @override
