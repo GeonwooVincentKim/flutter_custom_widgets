@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class EnterNewHabitBox extends StatelessWidget {
+class CustomAlertBox extends StatelessWidget {
   final controller;
   final VoidCallback onSave;
   final VoidCallback onCancel;
 
-  const EnterNewHabitBox({super.key, this.controller, required this.onSave, required this.onCancel});
+  const CustomAlertBox({super.key, this.controller, required this.onSave, required this.onCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class EnterNewHabitBox extends StatelessWidget {
           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white))
         ),
+        onSubmitted: (_) => submit(context),
       ),
       actions: [
         MaterialButton(
@@ -38,5 +39,10 @@ class EnterNewHabitBox extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void submit(BuildContext context) {
+    Navigator.of(context).pop(controller.text);
+    controller.clear();
   }
 }
