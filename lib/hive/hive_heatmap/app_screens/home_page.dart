@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     _newHabitNameController.clear();
+    
     Navigator.of(context).pop();
   }
 
