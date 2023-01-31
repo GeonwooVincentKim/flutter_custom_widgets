@@ -3,6 +3,7 @@ import 'package:flutter_custom_widgets/hive/hive_heatmap/app_screens/my_floating
 import 'package:flutter_custom_widgets/hive/hive_heatmap/model/habit.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom_alertbox.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/habit_tile.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/month_summary.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -128,17 +129,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
-      body: ListView.builder(
-        itemCount: db.todaysHabitList.length,
-        itemBuilder:(context, index) {
-          return HabitTile(
-            habitName: db.todaysHabitList[index][0],
-            habitCompleted: db.todaysHabitList[index][1], 
-            onChanged: (value) => checkBoxTapped(value, index),
-            settingsTapped: (context) => openHabitSettings(index),
-            deleteTapped: (context) => deleteHabit(index),
-          );
-        },
+      body: ListView(
+        children: [
+          // monthly summary heat map
+          MonthlySummary(datasets: db.heatMapDateSet, startDate: _myBox.get("START_DATE")),
+
+          // list of habits
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: db.todaysHabitList.length,
+            itemBuilder:(context, index) {
+              return HabitTile(
+                habitName: db.todaysHabitList[index][0],
+                habitCompleted: db.todaysHabitList[index][1], 
+                onChanged: (value) => checkBoxTapped(value, index),
+                settingsTapped: (context) => openHabitSettings(index),
+                deleteTapped: (context) => deleteHabit(index),
+              );
+            },
+          ),
+        ]
       )
     );
   }
