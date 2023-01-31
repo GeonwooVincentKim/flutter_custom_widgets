@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_widgets/hive/hive_nosql/model/word_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -46,7 +48,32 @@ class _AddScreenState extends State<AddScreen> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final box = await Hive.openBox<WordModel>("word");
+
+                        int id = 0;
+
+                        if (box.isNotEmpty) {
+                          // Get the last item from the list
+                          final prevItem = box.getAt(box.length - 1);
+
+                          if (prevItem != null) {
+                            id = prevItem.id + 1;
+                          }
+                        }
+
+                        box.put(
+                          id,
+                          WordModel(
+                            id: id,
+                            engWord: engWord,
+                            korWord: korWord,
+                            correctCount: 0
+                          )
+                        );
+
+                        Navigator.of(context).pop();
+                      },
                       child: const Text("저장"),
                     ),
                   ),

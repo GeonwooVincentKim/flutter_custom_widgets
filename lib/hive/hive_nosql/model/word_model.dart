@@ -8,7 +8,7 @@ class WordModel {
   final int id;
 
   @HiveField(1)
-  final String endWord;
+  final String engWord;
 
   @HiveField(2)
   final String korWord;
@@ -18,7 +18,7 @@ class WordModel {
 
   WordModel({
     required this.id,
-    required this.endWord,
+    required this.engWord,
     required this.korWord,
     required this.correctCount
   });

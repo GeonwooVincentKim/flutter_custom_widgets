@@ -18,7 +18,7 @@ class WordModelAdapter extends TypeAdapter<WordModel> {
     };
     return WordModel(
       id: fields[0] as int,
-      endWord: fields[1] as String,
+      engWord: fields[1] as String,
       korWord: fields[2] as String,
       correctCount: fields[3] as int,
     );
@@ -31,7 +31,7 @@ class WordModelAdapter extends TypeAdapter<WordModel> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.endWord)
+      ..write(obj.engWord)
       ..writeByte(2)
       ..write(obj.korWord)
       ..writeByte(3)
