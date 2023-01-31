@@ -3,6 +3,7 @@ import 'package:flutter_custom_widgets/hive/hive_nosql/app_screens/add.dart';
 import 'package:flutter_custom_widgets/hive/hive_nosql/model/word_model.dart';
 import 'package:flutter_custom_widgets/hive/hive_nosql/widgets/word_card.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:get/get.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -34,11 +35,24 @@ class _BodyState extends State<Body> {
                   );
                 } else {
                   return WordCard(
-                    onBodyTap: () {},
-                    onCheckTap: () {},
+                    onBodyTap: () {
+                      // print("${item.engWord} -> engWord");
+                      Get.snackbar(item.engWord, item.korWord);
+                    },
+                    onCheckTap: () {
+                      final newModel = WordModel(
+                        id: item.id,
+                        engWord: item.engWord,
+                        korWord: item.korWord,
+                        correctCount: item.correctCount + 1
+                      );
+
+                      box.put(item.id, newModel);
+                    },
+
                     engWord: item.engWord,
                     korWord: item.korWord,
-                    correctCount: 0
+                    correctCount: item.correctCount
                   );
                 }
               },
