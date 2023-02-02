@@ -31,6 +31,7 @@ DateTime createDateTimeObject(String yyyymmdd) {
   int dd = int.parse(yyyymmdd.substring(6, 8));
 
   DateTime dateTimeObject = DateTime(yyyy, mm, dd);
+  // DateTime dateTimeObject = DateTime(yyyy, mm, 1);
   return dateTimeObject;
 }
 
