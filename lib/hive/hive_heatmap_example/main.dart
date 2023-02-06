@@ -6,7 +6,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  Map<DateTime, int> getData = {DateTime(2023, 02, 06) : 1};
+  Map<DateTime, int> getData = {DateTime(2023, 02, 06) : 13};
 
   @override
   Widget build(BuildContext context) {
