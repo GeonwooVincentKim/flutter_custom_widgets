@@ -13,9 +13,10 @@ class MyHeatMap extends StatelessWidget {
       showText: false,
       scrollable: true,
       datasets: {
-        DateTime(2023, 2, 6): 3,
-        DateTime(2023, 2, 7): 7,
-        DateTime(2023, 2, 8): 10,
+        // Colors light one if close to 1, Otherwise, colors dark one
+        DateTime(2023, 2, 6): 1,
+        DateTime(2023, 2, 7): 5,
+        DateTime(2023, 2, 8): 5,
         DateTime(2023, 2, 9): 13,
         DateTime(2023, 2, 13): 6,
       },
