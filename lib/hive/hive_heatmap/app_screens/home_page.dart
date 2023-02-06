@@ -37,13 +37,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   // checkbox was tapped
-  void checkBoxTapped(bool? value, int index) {
-    setState(() {
-      db.todaysHabitList[index][1] = value;
-    });
+  // void checkBoxTapped(bool? value, int index) {
+  //   setState(() {
+  //     db.todaysHabitList[index][1] = value;
+  //   });
     
-    db.updateDatabase();
-  }
+  //   db.updateDatabase();
+  // }
 
   // create a new habit
   final _newHabitNameController = TextEditingController();
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
               return HabitTile(
                 habitName: db.todaysHabitList[index][0],
                 habitCompleted: db.todaysHabitList[index][1], 
-                onChanged: (value) => checkBoxTapped(value, index),
+                // onChanged: (value) => checkBoxTapped(value, index),
                 settingsTapped: (context) => openHabitSettings(index),
                 deleteTapped: (context) => deleteHabit(index),
               );
