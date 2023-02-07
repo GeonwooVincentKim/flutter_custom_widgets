@@ -20,8 +20,8 @@ class Habit {
   // create initial default data
   void createDefaultData() {
     todaysHabitList = [
-      ["Run", false],
-      ["Read", false]
+      // ["Run", false],
+      // ["Read", false]
     ];
 
     _myBox.put("START_DATE", todaysDateFormatted());
@@ -74,7 +74,10 @@ class Habit {
 
     // key: "PERCENTAGE_SUMMARY_yyyymmdd"
     // value: string of 1db number between 0.0 ~ 1.0 inclusive
-    _myBox.put("PERCENTAGE_SUMMARY_${todaysDateFormatted()}", percent);
+    if (todaysHabitList.isNotEmpty) {
+      print("확인");
+      _myBox.put("PERCENTAGE_SUMMARY_${todaysDateFormatted()}", percent);
+    }
   }
 
   void loadHeatMap() {
