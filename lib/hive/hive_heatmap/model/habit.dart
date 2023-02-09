@@ -74,7 +74,7 @@ class Habit {
       // print("Plus -> ${int.parse(db.moneyList[i][0]) + int.parse(db.moneyList[i][0])}");
     
       innerSum += int.parse(todaysHabitList[i][0]); // Store into the innerSum
-    }    
+    }
 
     String percent = todaysHabitList.isEmpty 
       ? '0.0' 
