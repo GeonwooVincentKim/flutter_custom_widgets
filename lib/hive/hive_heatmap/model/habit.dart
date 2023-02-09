@@ -17,6 +17,8 @@ class Habit {
   List todaysHabitList = [];
   Map<DateTime, int> heatMapDateSet = {};
   int targetSum = 90000;
+  int dailySum = 0;
+  String sign = '+';
 
   // create initial default data
   void createDefaultData() {
@@ -43,6 +45,7 @@ class Habit {
     // if it's not a new day, load todays list
     else {
       todaysHabitList = _myBox.get(todaysDateFormatted());
+      dailySum = _myBox.get("DAILY_SUM");
     }
   }
 
@@ -53,6 +56,7 @@ class Habit {
 
     // update universal habit list in case it changed (new habit, edit habit, delete habit)
     _myBox.put("CURRENT_HABIT_LIST", todaysHabitList);
+    _myBox.put("DAILY_SUM", dailySum);
 
     // calculate habit complete percentages for each day
     calculateHabitPercentages();
@@ -62,23 +66,13 @@ class Habit {
   }
 
   void calculateHabitPercentages() {
-    // int countCompleted = 0;
-    // for (int i = 0; i < todaysHabitList.length; i++) {
-    //   countCompleted++;
-    // }
-
-    int innerSum = 0;
-    for (int i = 0; i < todaysHabitList.length; i++) {
-      // print(db.moneyList[i][0].runtimeType); // Get current value's type
-      print("Values -> ${int.parse(todaysHabitList[i][0])}");
-      // print("Plus -> ${int.parse(db.moneyList[i][0]) + int.parse(db.moneyList[i][0])}");
-    
-      innerSum += int.parse(todaysHabitList[i][0]); // Store into the innerSum
-    }
+    _myBox.get("DAILY_SUM");
+    print(dailySum);
+    // _myBox.put("DAILY_SUM", dailySum);
 
     String percent = todaysHabitList.isEmpty 
       ? '0.0' 
-      : (innerSum / targetSum).toStringAsFixed(1);
+      : (dailySum / targetSum).toStringAsFixed(1);
 
     // key: "PERCENTAGE_SUMMARY_yyyymmdd"
     // value: string of 1db number between 0.0 ~ 1.0 inclusive
