@@ -16,7 +16,8 @@ final _myBox = Hive.box("habit_db");
 class Habit {
   List todaysHabitList = [];
   Map<DateTime, int> heatMapDateSet = {};
-  int targetSum = 90000;
+  // int targetSum = 90000;
+  int targetSum = 0;
   int dailySum = 0;
   String sign = '+';
 
@@ -46,6 +47,7 @@ class Habit {
     else {
       todaysHabitList = _myBox.get(todaysDateFormatted());
       dailySum = _myBox.get("DAILY_SUM");
+      targetSum = _myBox.get("TARGET_SUM");
     }
   }
 
@@ -57,6 +59,7 @@ class Habit {
     // update universal habit list in case it changed (new habit, edit habit, delete habit)
     _myBox.put("CURRENT_HABIT_LIST", todaysHabitList);
     _myBox.put("DAILY_SUM", dailySum);
+    _myBox.put("TARGET_SUM", targetSum);
 
     // calculate habit complete percentages for each day
     calculateHabitPercentages();
@@ -67,7 +70,10 @@ class Habit {
 
   void calculateHabitPercentages() {
     _myBox.get("DAILY_SUM");
+    _myBox.get("TARGET_SUM");
+
     print(dailySum);
+    print(targetSum);
     // _myBox.put("DAILY_SUM", dailySum);
 
     String percent = todaysHabitList.isEmpty 

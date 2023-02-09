@@ -22,9 +22,10 @@ class _HomePageState extends State<HomePage> {
   final _myBox = Hive.box("habit_db");
 
   int innerSum = 0;
+  int targetSum = 0;
   
   final _newHabitNameController = TextEditingController();
-
+  final _newTargetAmountController = TextEditingController();
 
   @override
   void initState() {
@@ -58,12 +59,12 @@ class _HomePageState extends State<HomePage> {
         ),
 
         const SizedBox(width:35),
-        // GestureDetector(
-        //   onTap: () {
-        //     createNewHabit(_newTargetAmountController, saveTargetAmount, cancelDialogBox);
-        //   },
-        //   child: const CustomCircleAvatar(backgroundColor: transparentColor, icon: CupertinoIcons.creditcard, iconColor: buttonTextColor, size: 35),
-        // )
+        GestureDetector(
+          onTap: () {
+            createNewHabit(_newTargetAmountController, saveTargetAmount, cancelDialogBox);
+          },
+          child: const CustomCircleAvatar(backgroundColor: transparentColor, icon: Icons.credit_card, iconColor: buttonTextColor, size: 35),
+        )
       ],
     );
   }
@@ -116,9 +117,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   // save target expand
-  // void saveTargetAmount() {
-  //   setState(() => db.targetSum = int.parse())
-  // }
+  void saveTargetAmount() {
+    setState(() {
+      db.targetSum = int.parse(_newTargetAmountController.text);
+      _myBox.put("TARGET_SUM", targetSum);
+    });
+    db.updateDatabase();
+
+    _newTargetAmountController.clear();
+    Navigator.of(context).pop();
+  }
 
   // save the new habit
   void saveNewHabit() {
