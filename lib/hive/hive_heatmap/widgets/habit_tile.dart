@@ -5,7 +5,7 @@ class HabitTile extends StatelessWidget {
   final String habitName;
   final bool habitCompleted;
   // final Function(bool?)? onChanged;
-  final Function(BuildContext)? settingsTapped;
+  // final Function(BuildContext)? settingsTapped;
   final Function(BuildContext)? deleteTapped;
 
   const HabitTile({
@@ -13,7 +13,7 @@ class HabitTile extends StatelessWidget {
     required this.habitName, 
     required this.habitCompleted,
     // required this.onChanged, 
-    required this.settingsTapped, 
+    // required this.settingsTapped, 
     required this.deleteTapped
   });
 
@@ -26,12 +26,12 @@ class HabitTile extends StatelessWidget {
           motion: StretchMotion(),
           children: [
             // settings option
-            SlidableAction(
-              onPressed: settingsTapped,
-              backgroundColor: Colors.grey.shade800,
-              icon: Icons.settings,
-              borderRadius: BorderRadius.circular(12),
-            ),
+            // SlidableAction(
+            //   onPressed: settingsTapped,
+            //   backgroundColor: Colors.grey.shade800,
+            //   icon: Icons.settings,
+            //   borderRadius: BorderRadius.circular(12),
+            // ),
 
             // delete option
             SlidableAction(

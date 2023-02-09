@@ -4,6 +4,7 @@ import 'package:flutter_custom_widgets/hive/hive_heatmap/model/habit.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom_alertbox.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/habit_tile.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/month_summary.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/row/custom_row.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,6 +35,27 @@ class _HomePageState extends State<HomePage> {
     db.updateDatabase();
 
     super.initState();
+  }
+
+  CustomRow _widgetTargetAmount(int targetSum, bool hasSumValue) {
+    return CustomRow(
+      children: [
+        const SizedBox(width: 50),
+
+        ElevatedButton(
+          onPressed: () => false,
+          child: Text("$targetSum"),
+        ),
+
+        const SizedBox(width:35),
+        // GestureDetector(
+        //   onTap: () {
+        //     createNewExpanditure(_newTargetAmountController, saveTargetAmount, cancelDialogBox);
+        //   },
+        //   child: const CustomCircleAvatar(backgroundColor: transparentColor, icon: CupertinoIcons.creditcard, iconColor: buttonTextColor, size: 35),
+        // )
+      ],
+    );
   }
 
   // checkbox was tapped
@@ -89,32 +111,32 @@ class _HomePageState extends State<HomePage> {
   }
 
   // open habit setttings to edit
-  void openHabitSettings(int index) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return CustomAlertBox(
-          controller: _newHabitNameController,
-          hintText: db.todaysHabitList[index][0],
-          onSave: () => saveExistingHabit(index),
-          onCancel: cancelDialogBox,
-        );
-      }
-    );
-  }
+  // void openHabitSettings(int index) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return CustomAlertBox(
+  //         controller: _newHabitNameController,
+  //         hintText: db.todaysHabitList[index][0],
+  //         onSave: () => saveExistingHabit(index),
+  //         onCancel: cancelDialogBox,
+  //       );
+  //     }
+  //   );
+  // }
 
   // save existing habit with a new name
-  void saveExistingHabit(int index) {
-    setState(() {
-      db.todaysHabitList[index][0] = _newHabitNameController.text;
-    });
+  // void saveExistingHabit(int index) {
+  //   setState(() {
+  //     db.todaysHabitList[index][0] = _newHabitNameController.text;
+  //   });
 
-    _newHabitNameController.clear();
+  //   _newHabitNameController.clear();
     
-    Navigator.of(context).pop();
+  //   Navigator.of(context).pop();
 
-    db.updateDatabase();
-  }
+  //   db.updateDatabase();
+  // }
 
   // delete habit
   void deleteHabit(int index) {
@@ -132,6 +154,8 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
       body: ListView(
         children: [
+          _widgetTargetAmount(db.targetSum, true),
+
           // monthly summary heat map
           MonthlySummary(datasets: db.heatMapDateSet, startDate: _myBox.get("START_DATE")),
 
@@ -145,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                 habitName: db.todaysHabitList[index][0],
                 habitCompleted: db.todaysHabitList[index][1], 
                 // onChanged: (value) => checkBoxTapped(value, index),
-                settingsTapped: (context) => openHabitSettings(index),
+                // settingsTapped: (context) => openHabitSettings(index),
                 deleteTapped: (context) => deleteHabit(index),
               );
             },

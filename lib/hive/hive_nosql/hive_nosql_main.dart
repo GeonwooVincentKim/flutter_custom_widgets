@@ -8,6 +8,7 @@ void main() async {
   Hive.registerAdapter(WordModelAdapter());
 
   await Hive.openBox<WordModel>("word");
+  await Hive.openBox("habit_db");
 
   runApp(const MyApp());
 }

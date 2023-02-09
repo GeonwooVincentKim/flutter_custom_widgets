@@ -20,6 +20,7 @@ class CustomAlertBox extends StatelessWidget {
       backgroundColor: Colors.grey[900],
       content: TextField(
         controller: controller,
+        keyboardType: TextInputType.number,
         style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
         decoration: InputDecoration(
           hintText: hintText,
@@ -27,7 +28,7 @@ class CustomAlertBox extends StatelessWidget {
           enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
           focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white))
         ),
-        onSubmitted: (_) => submit(context),
+        // onSubmitted: (_) => submit(context),
       ),
       actions: [
         MaterialButton(

@@ -16,6 +16,7 @@ final _myBox = Hive.box("habit_db");
 class Habit {
   List todaysHabitList = [];
   Map<DateTime, int> heatMapDateSet = {};
+  int targetSum = 90000;
 
   // create initial default data
   void createDefaultData() {
@@ -31,12 +32,12 @@ class Habit {
   void loadData() {
     // if it's a new day, get habit list from database
     if (_myBox.get(todaysDateFormatted()) == null) {
-      todaysHabitList = _myBox.get("CURRENT_HABIT_LIST");
+      // todaysHabitList = _myBox.get("CURRENT_HABIT_LIST");
     
-      // set all habit completed to false since it's a new day
-      for (int i = 0; i < todaysHabitList.length; i++) {
-        todaysHabitList[i][1] = false;
-      }
+      // // set all habit completed to false since it's a new day
+      // for (int i = 0; i < todaysHabitList.length; i++) {
+      //   todaysHabitList[i][1] = false;
+      // }
     }
     
     // if it's not a new day, load todays list
@@ -61,23 +62,27 @@ class Habit {
   }
 
   void calculateHabitPercentages() {
-    int countCompleted = 0;
+    // int countCompleted = 0;
+    // for (int i = 0; i < todaysHabitList.length; i++) {
+    //   countCompleted++;
+    // }
+
+    int innerSum = 0;
     for (int i = 0; i < todaysHabitList.length; i++) {
-      if (todaysHabitList[i][1] == true) {
-        countCompleted++;
-      }
-    }
+      // print(db.moneyList[i][0].runtimeType); // Get current value's type
+      print("Values -> ${int.parse(todaysHabitList[i][0])}");
+      // print("Plus -> ${int.parse(db.moneyList[i][0]) + int.parse(db.moneyList[i][0])}");
+    
+      innerSum += int.parse(todaysHabitList[i][0]); // Store into the innerSum
+    }    
 
     String percent = todaysHabitList.isEmpty 
       ? '0.0' 
-      : (countCompleted / todaysHabitList.length).toStringAsFixed(1);
+      : (innerSum / targetSum).toStringAsFixed(1);
 
     // key: "PERCENTAGE_SUMMARY_yyyymmdd"
     // value: string of 1db number between 0.0 ~ 1.0 inclusive
-    if (todaysHabitList.isNotEmpty) {
-      print("확인");
-      _myBox.put("PERCENTAGE_SUMMARY_${todaysDateFormatted()}", percent);
-    }
+    _myBox.put("PERCENTAGE_SUMMARY_${todaysDateFormatted()}", percent);
   }
 
   void loadHeatMap() {
@@ -89,7 +94,7 @@ class Habit {
     // go from start date to today and add each percentage to the dataset
     // "PERCENTAGE_SUMMARY_yyyymmdd" will be the key in the database
     for (int i = 0; i < daysInBetweeen + 1; i++) {
-      String yyyymmdd = convertDateTimeToString(startDate.add(Duration(days: 1)));
+      String yyyymmdd = convertDateTimeToString(startDate.add(Duration(days: i)));
       double strengthAsPercent = double.parse(_myBox.get("PERCENTAGE_SUMMARY_$yyyymmdd") ?? "0.0");
 
       // split the datatime up like below so it doesn't worry about hours/mins/secs etc.
@@ -104,8 +109,11 @@ class Habit {
       int day = startDate.add(Duration(days: i)).day;
 
       final percentForEachDay = <DateTime, int> {
-        DateTime(year, month, day) : (10 + strengthAsPercent).toInt()
+        DateTime(year, month, day) : (10 * strengthAsPercent).toInt()
       };
+
+      print(strengthAsPercent);
+      print(percentForEachDay);
 
       heatMapDateSet.addEntries(percentForEachDay.entries);
       print(heatMapDateSet);
