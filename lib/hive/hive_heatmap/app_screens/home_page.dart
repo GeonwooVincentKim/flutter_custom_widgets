@@ -92,15 +92,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // checkbox was tapped
-  // void checkBoxTapped(bool? value, int index) {
-  //   setState(() {
-  //     db.todayMoneyList[index][1] = value;
-  //   });
-    
-  //   db.updateDatabase();
-  // }
-
   // create a new money
   void createNewMoney(controller, onSave, onCancel) {
     // show alert dialog for user to enter the new money details
@@ -158,34 +149,6 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
   }
 
-  // open money setttings to edit
-  // void openMoneySettings(int index) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return CustomAlertBox(
-  //         controller: _newMoneyNameController,
-  //         hintText: db.todayMoneyList[index][0],
-  //         onSave: () => saveExistingMoney(index),
-  //         onCancel: cancelDialogBox,
-  //       );
-  //     }
-  //   );
-  // }
-
-  // save existing money with a new name
-  // void saveExistingMoney(int index) {
-  //   setState(() {
-  //     db.todayMoneyList[index][0] = _newMoneyNameController.text;
-  //   });
-
-  //   _newMoneyNameController.clear();
-    
-  //   Navigator.of(context).pop();
-
-  //   db.updateDatabase();
-  // }
-
   // delete money
   void deleteMoney(int index) {
     setState(() {
@@ -209,14 +172,12 @@ class _HomePageState extends State<HomePage> {
     }
 
     db.dailySum = innerSum.abs();
-    // _myBox.put("INNER_SUM", innerSum);
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: Colors.grey[300],
-      // floatingActionButton: MyFloatingActionButton(onPressed: createNewMoney),
       child: Column(
         children: [
           _widgetTargetAmount(db.targetSum, true),
