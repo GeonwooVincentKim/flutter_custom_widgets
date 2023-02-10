@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/app_screens/my_floating_action_button.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom_alertbox.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/habit_tile.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/month_summary.dart';
 import 'package:flutter_custom_widgets/hive/hive_new_heatmap_example/model/custom_money.dart';
@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
   }
 
   void openMoneySettings(int index) {
-    showDialog(
+    showCupertinoDialog(
       context: context,
       builder: (context) {
         return CustomNewAlertDialogBox(
