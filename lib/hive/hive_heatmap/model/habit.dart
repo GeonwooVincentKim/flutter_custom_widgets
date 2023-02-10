@@ -16,18 +16,13 @@ final _myBox = Hive.box("habit_db");
 class Habit {
   List todaysHabitList = [];
   Map<DateTime, int> heatMapDateSet = {};
-  // int targetSum = 90000;
   int targetSum = 0;
   int dailySum = 0;
   String sign = '+';
 
   // create initial default data
   void createDefaultData() {
-    todaysHabitList = [
-      // ["Run", false],
-      // ["Read", false]
-    ];
-
+    todaysHabitList = [];
     _myBox.put("START_DATE", todaysDateFormatted());
   }
 
@@ -35,12 +30,6 @@ class Habit {
   void loadData() {
     // if it's a new day, get habit list from database
     if (_myBox.get(todaysDateFormatted()) == null) {
-      // todaysHabitList = _myBox.get("CURRENT_HABIT_LIST");
-    
-      // // set all habit completed to false since it's a new day
-      // for (int i = 0; i < todaysHabitList.length; i++) {
-      //   todaysHabitList[i][1] = false;
-      // }
     }
     
     // if it's not a new day, load todays list
@@ -76,9 +65,19 @@ class Habit {
     print(targetSum);
     // _myBox.put("DAILY_SUM", dailySum);
 
-    String percent = todaysHabitList.isEmpty 
-      ? '0.0' 
-      : (dailySum / targetSum).toStringAsFixed(1);
+    String percent = '';
+    
+    if (todaysHabitList.isEmpty) {
+      percent = '0.0';
+    } else {
+      if (dailySum <= targetSum) {
+        percent = (dailySum / targetSum).toStringAsFixed(1);
+        print("uP -> $percent");
+      } else {
+        percent = (targetSum / dailySum).toStringAsFixed(1);
+        print("down -> $percent");
+      }
+    }
 
     // key: "PERCENTAGE_SUMMARY_yyyymmdd"
     // value: string of 1db number between 0.0 ~ 1.0 inclusive

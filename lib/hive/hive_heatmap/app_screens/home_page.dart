@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
     return CupertinoPageScaffold(
       backgroundColor: Colors.grey[300],
       // floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
-      child: ListView(
+      child: Column(
         children: [
           _widgetTargetAmount(db.targetSum, true),
 
@@ -223,20 +223,22 @@ class _HomePageState extends State<HomePage> {
           MonthlySummary(datasets: db.heatMapDateSet, startDate: _myBox.get("START_DATE")),
 
           // list of habits
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: db.todaysHabitList.length,
-            itemBuilder:(context, index) {
-              return HabitTile(
-                habitName: db.todaysHabitList[index][0],
-                // habitCompleted: db.todaysHabitList[index][1], 
-                // onChanged: (value) => checkBoxTapped(value, index),
-                // settingsTapped: (context) => openHabitSettings(index),
-                deleteTapped: (context) => deleteHabit(index),
-              );
-            },
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: db.todaysHabitList.length,
+              itemBuilder:(context, index) {
+                return HabitTile(
+                  habitName: db.todaysHabitList[index][0],
+                  // habitCompleted: db.todaysHabitList[index][1], 
+                  // onChanged: (value) => checkBoxTapped(value, index),
+                  // settingsTapped: (context) => openHabitSettings(index),
+                  deleteTapped: (context) => deleteHabit(index),
+                );
+              },
+            ),
           ),
+          
           Align(
             alignment: Alignment.bottomCenter,
             child: Column(
