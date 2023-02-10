@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   int innerSum = 0;
   int targetSum = 0;
+  bool? hasSumValue;
   
   final _newMoneyNameController = TextEditingController();
   final _newTargetAmountController = TextEditingController();
@@ -109,6 +110,7 @@ class _HomePageState extends State<HomePage> {
         return CustomAlertBox(
           controller: controller,
           hintText: 'Enter Money Name',
+          hasSumValue: (controller == _newMoneyNameController && db.targetSum <= 0) ? false : true,
           onSave: onSave,
           onCancel: onCancel,
         );
