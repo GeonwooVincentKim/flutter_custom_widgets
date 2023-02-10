@@ -22,8 +22,6 @@ class MonthlySummary extends StatelessWidget {
         endDate: DateTime.now().add(Duration(days: 40)),
         datasets: datasets,
         colorMode: ColorMode.color,
-        defaultColor: Colors.grey[200],
-        textColor: Colors.white,
         showColorTip: false,
         showText: true,
         scrollable: true,
