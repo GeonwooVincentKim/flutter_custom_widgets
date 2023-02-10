@@ -1,13 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/app_screens/my_floating_action_button.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/model/habit.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/shared/style.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/circle/custom_circle_avatar.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom_alertbox.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom/circle/custom_circle_avatar.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom/custom_alertbox.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom/custom_elevated_button.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/habit_tile.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/month_summary.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/row/custom_elevated_button.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/row/custom_row.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom/row/custom_row.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
   // create a new habit
   void createNewHabit(controller, onSave, onCancel) {
     // show alert dialog for user to enter the new habit details
-    showDialog(
+    showCupertinoDialog(
       context: context, 
       builder: (context) {
         return CustomAlertBox(
@@ -212,10 +212,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CupertinoPageScaffold(
       backgroundColor: Colors.grey[300],
       // floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
-      body: ListView(
+      child: ListView(
         children: [
           _widgetTargetAmount(db.targetSum, true),
 
@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> {
             itemBuilder:(context, index) {
               return HabitTile(
                 habitName: db.todaysHabitList[index][0],
-                habitCompleted: db.todaysHabitList[index][1], 
+                // habitCompleted: db.todaysHabitList[index][1], 
                 // onChanged: (value) => checkBoxTapped(value, index),
                 // settingsTapped: (context) => openHabitSettings(index),
                 deleteTapped: (context) => deleteHabit(index),

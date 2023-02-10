@@ -22,7 +22,7 @@ class CustomAlertBox extends StatelessWidget {
         controller: controller,
         autofocus: true,
         keyboardType: TextInputType.number,
-        style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+        style: const TextStyle(color: CupertinoColors.black),
         // decoration: InputDecoration(
         //   hintText: hintText,
         //   hintStyle: TextStyle(color: Colors.grey[600]),
@@ -41,22 +41,6 @@ class CustomAlertBox extends StatelessWidget {
           onPressed: onCancel,
           child: const Text("Cancel")
         )
-        // CupertinoButton(
-        //   onPressed: onSave,
-        //   color: Colors.black,
-        //   child: const Text(
-        //     "Save",
-        //     style: TextStyle(color: Colors.white)
-        //   ),
-        // ),
-        // CupertinoButton(
-        //   onPressed: onCancel,
-        //   color: Colors.black,
-        //   child: const Text(
-        //     "Cancel",
-        //     style: TextStyle(color: Colors.white)
-        //   ),
-        // )
       ],
     );
   }

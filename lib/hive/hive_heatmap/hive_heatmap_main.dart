@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/app_screens/home_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const CupertinoApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
-      theme: ThemeData(primarySwatch: Colors.green)
+      theme: CupertinoThemeData(primaryColor: CupertinoColors.activeGreen)
     );
   }
 }
