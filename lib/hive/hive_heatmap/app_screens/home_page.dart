@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/model/habit.dart';
+import 'package:flutter_custom_widgets/hive/hive_heatmap/model/money.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/shared/style.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom/circle/custom_circle_avatar.dart';
 import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/custom/custom_alertbox.dart';
@@ -18,20 +18,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Habit db = Habit();
-  final _myBox = Hive.box("habit_db");
+  Money db = Money();
+  final _myBox = Hive.box("money_db");
 
   int innerSum = 0;
   int targetSum = 0;
   
-  final _newHabitNameController = TextEditingController();
+  final _newMoneyNameController = TextEditingController();
   final _newTargetAmountController = TextEditingController();
 
   @override
   void initState() {
-    // if there is no current habit list, then it is the 1st time ever opening the app
+    // if there is no current money list, then it is the 1st time ever opening the app
     // then create default data
-    if (_myBox.get("CURRENT_HABIT_LIST") == null) {
+    if (_myBox.get("CURRENT_money_LIST") == null) {
       db.createDefaultData();
     } 
     
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(width:35),
         GestureDetector(
           onTap: () {
-            createNewHabit(_newTargetAmountController, saveTargetAmount, cancelDialogBox);
+            createNewMoney(_newTargetAmountController, saveTargetAmount, cancelDialogBox);
           },
           child: const CustomCircleAvatar(backgroundColor: transparentColor, icon: Icons.credit_card, iconColor: buttonTextColor, size: 35),
         )
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(width: 35),
         GestureDetector(
           onTap: () {
-            createNewHabit(_newHabitNameController, saveNewHabit, cancelDialogBox);
+            createNewMoney(_newMoneyNameController, saveNewMoney, cancelDialogBox);
           },
           child: const CustomCircleAvatar(backgroundColor: swipeIconColor, icon: Icons.add, iconColor: plusIconColor, size: 35)
         )
@@ -94,21 +94,21 @@ class _HomePageState extends State<HomePage> {
   // checkbox was tapped
   // void checkBoxTapped(bool? value, int index) {
   //   setState(() {
-  //     db.todaysHabitList[index][1] = value;
+  //     db.todayMoneyList[index][1] = value;
   //   });
     
   //   db.updateDatabase();
   // }
 
-  // create a new habit
-  void createNewHabit(controller, onSave, onCancel) {
-    // show alert dialog for user to enter the new habit details
+  // create a new money
+  void createNewMoney(controller, onSave, onCancel) {
+    // show alert dialog for user to enter the new money details
     showCupertinoDialog(
       context: context, 
       builder: (context) {
         return CustomAlertBox(
           controller: controller,
-          hintText: 'Enter Habit Name',
+          hintText: 'Enter Money Name',
           onSave: onSave,
           onCancel: onCancel,
         );
@@ -128,18 +128,18 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
   }
 
-  // save the new habit
-  void saveNewHabit() {
-    // add new habit to todays habit list
+  // save the new money
+  void saveNewMoney() {
+    // add new money to todays money list
     setState(() {
-      db.todaysHabitList.add([_newHabitNameController.text, false]);
+      db.todayMoneyList.add([_newMoneyNameController.text, false]);
 
       saveDifference(innerSum, '+');
       _myBox.put("INNER_SUM", innerSum);
     });
 
     // clear textfield
-    _newHabitNameController.clear();
+    _newMoneyNameController.clear();
 
     // pop dialog box
     Navigator.of(context).pop();
@@ -147,47 +147,47 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-  // cancel the new habit
+  // cancel the new money
   void cancelDialogBox() {
     // clear textfield
-    _newHabitNameController.clear();
+    _newMoneyNameController.clear();
 
     // pop dialog box
     Navigator.of(context).pop();
   }
 
-  // open habit setttings to edit
-  // void openHabitSettings(int index) {
+  // open money setttings to edit
+  // void openMoneySettings(int index) {
   //   showDialog(
   //     context: context,
   //     builder: (context) {
   //       return CustomAlertBox(
-  //         controller: _newHabitNameController,
-  //         hintText: db.todaysHabitList[index][0],
-  //         onSave: () => saveExistingHabit(index),
+  //         controller: _newMoneyNameController,
+  //         hintText: db.todayMoneyList[index][0],
+  //         onSave: () => saveExistingMoney(index),
   //         onCancel: cancelDialogBox,
   //       );
   //     }
   //   );
   // }
 
-  // save existing habit with a new name
-  // void saveExistingHabit(int index) {
+  // save existing money with a new name
+  // void saveExistingMoney(int index) {
   //   setState(() {
-  //     db.todaysHabitList[index][0] = _newHabitNameController.text;
+  //     db.todayMoneyList[index][0] = _newMoneyNameController.text;
   //   });
 
-  //   _newHabitNameController.clear();
+  //   _newMoneyNameController.clear();
     
   //   Navigator.of(context).pop();
 
   //   db.updateDatabase();
   // }
 
-  // delete habit
-  void deleteHabit(int index) {
+  // delete money
+  void deleteMoney(int index) {
     setState(() {
-      db.todaysHabitList.removeAt(index);
+      db.todayMoneyList.removeAt(index);
 
       // getSign('-');
       saveDifference(innerSum, '-');
@@ -198,11 +198,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void saveDifference(int innerSum, String sign) {
-    for (int i = 0; i < db.todaysHabitList.length; i++) {
+    for (int i = 0; i < db.todayMoneyList.length; i++) {
       if (sign == '+') {
-        innerSum += int.parse(db.todaysHabitList[i][0]);
+        innerSum += int.parse(db.todayMoneyList[i][0]);
       } else if (sign == '-') {
-        innerSum -= int.parse(db.todaysHabitList[i][0]);
+        innerSum -= int.parse(db.todayMoneyList[i][0]);
       }
     }
 
@@ -214,7 +214,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: Colors.grey[300],
-      // floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
+      // floatingActionButton: MyFloatingActionButton(onPressed: createNewMoney),
       child: Column(
         children: [
           _widgetTargetAmount(db.targetSum, true),
@@ -222,18 +222,18 @@ class _HomePageState extends State<HomePage> {
           // monthly summary heat map
           MonthlySummary(datasets: db.heatMapDateSet, startDate: _myBox.get("START_DATE")),
 
-          // list of habits
+          // list of moneys
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: db.todaysHabitList.length,
+              itemCount: db.todayMoneyList.length,
               itemBuilder:(context, index) {
-                return HabitTile(
-                  habitName: db.todaysHabitList[index][0],
-                  // habitCompleted: db.todaysHabitList[index][1], 
+                return MoneyTile(
+                  moneyName: db.todayMoneyList[index][0],
+                  // moneyCompleted: db.todayMoneyList[index][1], 
                   // onChanged: (value) => checkBoxTapped(value, index),
-                  // settingsTapped: (context) => openHabitSettings(index),
-                  deleteTapped: (context) => deleteHabit(index),
+                  // settingsTapped: (context) => openMoneySettings(index),
+                  deleteTapped: (context) => deleteMoney(index),
                 );
               },
             ),

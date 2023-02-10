@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/model/habit.dart';
-import 'package:flutter_custom_widgets/hive/hive_heatmap/widgets/month_summary.dart';
 import 'package:flutter_custom_widgets/hive/hive_nosql/app_screens/add.dart';
 import 'package:flutter_custom_widgets/hive/hive_nosql/model/word_model.dart';
 import 'package:flutter_custom_widgets/hive/hive_nosql/widgets/word_card.dart';

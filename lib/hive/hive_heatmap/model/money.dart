@@ -2,19 +2,19 @@ import 'package:flutter_custom_widgets/hive/hive_heatmap/shared/date_time.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // reference our box
-final _myBox = Hive.box("habit_db");
+final _myBox = Hive.box("money_db");
 
 /*
   Data Structure
 
-  _myBox.get("yyyymmdd") -> habitList
+  _myBox.get("yyyymmdd") -> moneyList
   _myBox.get("START_DATE") -> yyyymmdd
-  _myBox.get("CURRENT_HABIT_LIST") -> latest habit list
+  _myBox.get("CURRENT_money_LIST") -> latest money list
   _myBox.get("PERCENTAGE_SUMMARY_yyyymmdd") -> 0.0 ~ 1.0 (HeatMap Color opacity)
 */
 
-class Habit {
-  List todaysHabitList = [];
+class Money {
+  List todayMoneyList = [];
   Map<DateTime, int> heatMapDateSet = {};
   int targetSum = 0;
   int dailySum = 0;
@@ -22,19 +22,19 @@ class Habit {
 
   // create initial default data
   void createDefaultData() {
-    todaysHabitList = [];
+    todayMoneyList = [];
     _myBox.put("START_DATE", todaysDateFormatted());
   }
 
   // load data if it already exists
   void loadData() {
-    // if it's a new day, get habit list from database
+    // if it's a new day, get money list from database
     if (_myBox.get(todaysDateFormatted()) == null) {
     }
     
     // if it's not a new day, load todays list
     else {
-      todaysHabitList = _myBox.get(todaysDateFormatted());
+      todayMoneyList = _myBox.get(todaysDateFormatted());
       dailySum = _myBox.get("DAILY_SUM");
       targetSum = _myBox.get("TARGET_SUM");
     }
@@ -43,21 +43,21 @@ class Habit {
   // update database
   void updateDatabase() {
     // update todays entry
-    _myBox.put(todaysDateFormatted(), todaysHabitList);
+    _myBox.put(todaysDateFormatted(), todayMoneyList);
 
-    // update universal habit list in case it changed (new habit, edit habit, delete habit)
-    _myBox.put("CURRENT_HABIT_LIST", todaysHabitList);
+    // update universal money list in case it changed (new money, edit money, delete money)
+    _myBox.put("CURRENT_money_LIST", todayMoneyList);
     _myBox.put("DAILY_SUM", dailySum);
     _myBox.put("TARGET_SUM", targetSum);
 
-    // calculate habit complete percentages for each day
-    calculateHabitPercentages();
+    // calculate money complete percentages for each day
+    calculateMoneyPercentages();
 
     // load heat map
     loadHeatMap();
   }
 
-  void calculateHabitPercentages() {
+  void calculateMoneyPercentages() {
     _myBox.get("DAILY_SUM");
     _myBox.get("TARGET_SUM");
 
@@ -67,7 +67,7 @@ class Habit {
 
     String percent = '';
     
-    if (todaysHabitList.isEmpty) {
+    if (todayMoneyList.isEmpty) {
       percent = '0.0';
     } else {
       if (dailySum <= targetSum) {
