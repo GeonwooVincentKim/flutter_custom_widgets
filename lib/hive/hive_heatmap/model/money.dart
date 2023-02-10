@@ -9,7 +9,7 @@ final _myBox = Hive.box("money_db");
 
   _myBox.get("yyyymmdd") -> moneyList
   _myBox.get("START_DATE") -> yyyymmdd
-  _myBox.get("CURRENT_money_LIST") -> latest money list
+  _myBox.get("CURRENT_MONEY_LIST") -> latest money list
   _myBox.get("PERCENTAGE_SUMMARY_yyyymmdd") -> 0.0 ~ 1.0 (HeatMap Color opacity)
 */
 
@@ -46,7 +46,7 @@ class Money {
     _myBox.put(todaysDateFormatted(), todayMoneyList);
 
     // update universal money list in case it changed (new money, edit money, delete money)
-    _myBox.put("CURRENT_money_LIST", todayMoneyList);
+    _myBox.put("CURRENT_MONEY_LIST", todayMoneyList);
     _myBox.put("DAILY_SUM", dailySum);
     _myBox.put("TARGET_SUM", targetSum);
 
