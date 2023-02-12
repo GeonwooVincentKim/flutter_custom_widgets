@@ -97,7 +97,6 @@ class Money {
       double strengthAsPercent = double.parse(_myBox.get("PERCENTAGE_SUMMARY_$yyyymmdd") ?? "0.0");
 
       // split the datatime up like below so it doesn't worry about hours/mins/secs etc.
-
       // year
       int year = startDate.add(Duration(days: i)).year;
 
